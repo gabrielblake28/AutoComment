@@ -9,14 +9,39 @@
   "categories": [
     "Other"
   ],
-  "activationEvents": [],
+  "activationEvents": [
+    "onView:generate-explanation.explanation"
+  ],
   "main": "./out/extension.js",
   "contributes": {
+    "viewsContainers": {
+      "activitybar": [
+        {
+          "id": "generate-explanation",
+          "title": "Generated Explanation",
+          "icon": "media/comment-discussion.svg"
+        }
+      ]
+    },
+    "views": {
+      "generate-explanation": [
+        {
+          "type": "webview",
+          "id": "generate-explanation.explanation",
+          "name": "Explanation"
+        }
+      ]
+    },
     "menus": {
       "editor/context": [
         {
           "when": "editorHasSelection",
           "command": "firstextension.generatecomment",
+          "group": "1_modification"
+        },
+        {
+          "when": "editorHasSelection",
+          "command": "firstextension.generateexplanation",
           "group": "1_modification"
         }
       ]
@@ -25,12 +50,24 @@
       {
         "command": "firstextension.generatecomment",
         "title": "Generate Comment"
+      },
+      {
+        "command": "firstextension.generateexplanation",
+        "title": "Generate Explanation"
+      },
+      {
+        "command": "firstextension.addexp",
+        "title": "Add Explanation"
       }
     ],
     "keybindings": [
       {
         "command": "firstextension.generatecomment",
         "key": "ctrl+shift+/"
+      },
+      {
+        "command": "firstextension.generateexplanation",
+        "key": "ctrl+shift+f12"
       }
     ]
   },
