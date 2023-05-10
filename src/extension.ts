@@ -22,18 +22,18 @@ export function activate(context: vscode.ExtensionContext) {
 
   const explanationProvider = new ExplanationViewProvider(context.extensionUri);
 
-  let expalanationViewCmd = vscode.commands.registerCommand(
-    "firstextension.explanationview",
-    () => {
-      vscode.window.registerWebviewViewProvider(
-        ExplanationViewProvider.viewType,
-        explanationProvider,
-        {
-          webviewOptions: { retainContextWhenHidden: true },
-        }
-      );
-    }
-  );
+  // let expalanationViewCmd = vscode.commands.registerCommand(
+  //   "firstextension.explanationview",
+  //   () => {
+  //     vscode.window.registerWebviewViewProvider(
+  //       ExplanationViewProvider.viewType,
+  //       explanationProvider,
+  //       {
+  //         webviewOptions: { retainContextWhenHidden: true },
+  //       }
+  //     );
+  //   }
+  // );
 
   let autoExplanation = vscode.commands.registerCommand(
     "firstextension.generateexplanation",
@@ -78,7 +78,13 @@ export function activate(context: vscode.ExtensionContext) {
   context.subscriptions.push(
     autoCommentCmd,
     autoExplanation,
-    expalanationViewCmd,
+    vscode.window.registerWebviewViewProvider(
+      ExplanationViewProvider.viewType,
+      explanationProvider,
+      {
+        webviewOptions: { retainContextWhenHidden: true },
+      }
+    ),
     addExp
   );
 }
