@@ -54,10 +54,6 @@
       {
         "command": "firstextension.generateexplanation",
         "title": "Generate Explanation"
-      },
-      {
-        "command": "firstextension.addexp",
-        "title": "Add Explanation"
       }
     ],
     "keybindings": [
