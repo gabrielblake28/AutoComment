@@ -1,6 +1,6 @@
 {
-  "name": "firstextension",
-  "displayName": "FirstExtension",
+  "name": "codesense",
+  "displayName": "CodeSense AI",
   "description": "",
   "version": "0.0.1",
   "engines": {
@@ -12,13 +12,14 @@
   "activationEvents": [
     "onView:generate-explanation.explanation"
   ],
+  "pricing:": "Free Trail",
   "main": "./out/extension.js",
   "contributes": {
     "viewsContainers": {
       "activitybar": [
         {
           "id": "generate-explanation",
-          "title": "Generated Explanation",
+          "title": "CodeSense AI",
           "icon": "media/comment-discussion.svg"
         }
       ]
@@ -28,7 +29,7 @@
         {
           "type": "webview",
           "id": "generate-explanation.explanation",
-          "name": "Explanation"
+          "name": "Code Explanation"
         }
       ]
     },
@@ -36,33 +37,33 @@
       "editor/context": [
         {
           "when": "editorHasSelection",
-          "command": "firstextension.generatecomment",
+          "command": "codesense.generatecomment",
           "group": "1_modification"
         },
         {
           "when": "editorHasSelection",
-          "command": "firstextension.generateexplanation",
+          "command": "codesense.generateexplanation",
           "group": "1_modification"
         }
       ]
     },
     "commands": [
       {
-        "command": "firstextension.generatecomment",
+        "command": "codesense.generatecomment",
         "title": "Generate Comment"
       },
       {
-        "command": "firstextension.generateexplanation",
+        "command": "codesense.generateexplanation",
         "title": "Generate Explanation"
       }
     ],
     "keybindings": [
       {
-        "command": "firstextension.generatecomment",
+        "command": "codesense.generatecomment",
         "key": "ctrl+shift+/"
       },
       {
-        "command": "firstextension.generateexplanation",
+        "command": "codesense.generateexplanation",
         "key": "ctrl+shift+f12"
       }
     ]

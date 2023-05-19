@@ -31,7 +31,7 @@ export function activate(context: vscode.ExtensionContext) {
   const provider = new ExplanationViewProvider(context.extensionUri);
 
   let generateExplanation = vscode.commands.registerCommand(
-    "firstextension.generateexplanation",
+    "codesense.generateexplanation",
     async () => {
       vscode.window.withProgress(
         {
@@ -78,7 +78,7 @@ export function activate(context: vscode.ExtensionContext) {
   );
 
   let generateComment = vscode.commands.registerCommand(
-    "firstextension.generatecomment",
+    "codesense.generatecomment",
     async () => {
       vscode.window.withProgress(
         {
