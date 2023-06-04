@@ -3,11 +3,10 @@
 // Import the module and reference it with the alias vscode in your code below
 import * as vscode from "vscode";
 import { config } from "dotenv";
-import { getNonce } from "./getNonce";
 import { Configuration, OpenAIApi } from "openai";
 import { GenerateCommentCommand } from "./services/commandService/impl/GenerateComment/GenerateCommentCommand";
-import { GenerateExplanationCommand } from "./services/commandService/impl/GenerateExplanation/GenerateExplanationCommand";
 import { ExplanationViewProvider } from "./services/viewProviders/ExplanationViewProvider";
+// import { login, logout } from "./auth/authCommands";
 config();
 
 // This method is called when your extension is activated
@@ -46,10 +45,6 @@ export function activate(context: vscode.ExtensionContext) {
             selection.end &&
             vscode.window.activeTextEditor
           ) {
-            const content = vscode.window.activeTextEditor?.document.getText(
-              new vscode.Range(selection.start, selection?.end)
-            );
-
             if (!provider.view) {
               await vscode.commands.executeCommand(
                 "generate-explanation.explanation.focus"
@@ -58,18 +53,8 @@ export function activate(context: vscode.ExtensionContext) {
               provider.view?.show(true);
             }
 
-            const result = await new GenerateExplanationCommand().ExecuteAsync({
-              Content: content,
-              OpenAiClient: openai,
-              Provider: provider,
-            });
-
             if (provider.view) {
-              provider.view.webview.html = result;
-            } else {
-              vscode.window.showInformationMessage(
-                "please select the code you would like to comment."
-              );
+              await provider.addExplanation();
             }
           }
         }
@@ -133,7 +118,8 @@ export function activate(context: vscode.ExtensionContext) {
       {
         webviewOptions: { retainContextWhenHidden: true },
       }
-    )
+    ),
+    vscode.commands.registerCommand("codesense.logout", async () => {})
   );
 }
 

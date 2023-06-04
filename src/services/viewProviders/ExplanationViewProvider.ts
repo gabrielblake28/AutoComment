@@ -61,7 +61,10 @@ export class ExplanationViewProvider implements vscode.WebviewViewProvider {
       });
 
       if (this.view) {
-        this.view.webview.html = result.data.choices[0].message?.content ?? "";
+        this.view.webview.html = this._getHtmlForWebview(
+          this.view.webview,
+          result.data.choices[0].message?.content ?? ""
+        );
       }
     } else {
       vscode.window.showInformationMessage(
@@ -70,7 +73,7 @@ export class ExplanationViewProvider implements vscode.WebviewViewProvider {
     }
   }
 
-  private _getHtmlForWebview(webview: vscode.Webview) {
+  private _getHtmlForWebview(webview: vscode.Webview, content: string = "") {
     // Get the local path to main script run in the webview, then convert it to a uri we can use in the webview.
     const scriptUri = webview.asWebviewUri(
       vscode.Uri.joinPath(this._extensionUri, "media", "main.js")
@@ -107,16 +110,15 @@ export class ExplanationViewProvider implements vscode.WebviewViewProvider {
         <link href="${styleVSCodeUri}" rel="stylesheet">
         <link href="${styleMainUri}" rel="stylesheet">
   
-        <title>Cat Colors</title>
       </head>
       <body>
       
-        <div>
-          <h3>Ctrl + Shift + f12 to generate an explanation of your selected code</h3>
-          <div class="content"></div>
+        <div >
+        <h4><div class="steps">Step 1:</div> Highlight code snippet</h4>
+        <h4><div class="steps">Step 2:</div> Run Command (Ctrl + Shift + F12)</h4>  
+        <hr/>      
+          <div class="content">${content}</div>  
         </div>
-  
-        
   
         <script nonce="${nonce}" src="${scriptUri}"></script>
       </body>
