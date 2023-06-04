@@ -1,71 +1,80 @@
-# firstextension README
+# CodeSense AI
 
-This is the README for your extension "firstextension". After writing up a brief description, we recommend including the following sections.
+CodeSense AI is a cutting-edge Visual Studio extension designed to enhance code documentation and comprehension through the power of artificial intelligence. Leveraging the capabilities of ChatGPT, CodeSense AI revolutionizes the way developers write comments for their code and understand complex programming concepts.
 
-## Features
+_Contact Information Below_
 
-Describe specific features of your extension including screenshots of your extension in action. Image paths are relative to this README file.
+# Comment Generation
 
-For example if there is an image subfolder under your extension project workspace:
+With CodeSense AI, writing comprehensive and meaningful comments becomes a breeze. Gone are the days of struggling to articulate the purpose, functionality, or intended usage of your code. Simply invoke the extension while editing your code, and CodeSense AI will generate clear and concise comments for you. It analyzes the code structure, variable names, and contextual information to provide accurate and context-aware comments that describe the code's purpose, inputs, outputs, and potential caveats.
 
-\!\[feature X\]\(images/feature-x.png\)
+_Default Keybind: Ctrl + Shift + /_
 
-> Tip: Many popular extensions utilize animations. This is an excellent way to show off your extension! We recommend short, focused animations that are easy to follow.
+![Comment Generation Demo](media/CommentGenerationGif.gif)
 
-## Requirements
+<!-- Developers can easily customize the comment style and level of detail to suit their preferences and project requirements. -->
 
-If you have any requirements or dependencies, add a section describing those and how to install and configure them.
+# Code Explanation
 
-## Extension Settings
+This feature utilizes ChatGPT, an advanced language model, to provide clear and detailed explanations for code segments, helping developers understand complex logic and improve their code comprehension.
 
-Include if your extension adds any VS Code settings through the `contributes.configuration` extension point.
+With CodeSense AI Explanation, unraveling intricate code becomes effortless. Simply select a code snippet in Visual Studio and invoke the feature with a click or a customizable keyboard shortcut. CodeSense Explanation then leverages the capabilities of ChatGPT to break down the code, identify key algorithms and patterns, and provide step-by-step explanations of its functionality.
 
-For example:
+_Default Keybind: Ctrl + Shift + F12_
 
-This extension contributes the following settings:
-
-* `myExtension.enable`: Enable/disable this extension.
-* `myExtension.thing`: Set to `blah` to do something.
-
-## Known Issues
-
-Calling out known issues can help limit users opening duplicate issues against your extension.
-
-## Release Notes
-
-Users appreciate release notes as you update your extension.
-
-### 1.0.0
-
-Initial release of ...
-
-### 1.0.1
-
-Fixed issue #.
-
-### 1.1.0
-
-Added features X, Y, and Z.
+![Code Explanation Demo](media/CodeExplanationGif.gif)
 
 ---
 
-## Following extension guidelines
+## Works with 9 languages
 
-Ensure that you've read through the extensions guidelines and follow the best practices for creating your extension.
+- Javascript
+- Typescript
+- PHP
+- Python
+- C
+- C#
+- C++
+- Java
+- Rust
 
-* [Extension Guidelines](https://code.visualstudio.com/api/references/extension-guidelines)
+## Coming Soon
 
-## Working with Markdown
+- Docstring Comments
+- Code Optimization
+- Symbol Comments
+
+## Contact
+
+If you have any inquiries, comments, or concerns, please don't hesitate to contact us at admin@codesenseai.com. We highly value your feedback as it plays a pivotal role in our continuous efforts to enhance our product. We encourage you to provide feedback directly on our website at [Codesenseai.com](https://codesenseai.com). Your input is invaluable to us, and we appreciate your contribution to improving our services.
+
+<!-- ## Release Notes
+
+Users appreciate release notes as you update your extension. -->
+
+<!-- ### 1.0.0
+
+Initial release of ... -->
+
+<!-- ### 1.0.1
+
+Fixed issue #. -->
+
+<!-- ### 1.1.0
+
+Added features X, Y, and Z. -->
+
+<!-- ## Working with Markdown
 
 You can author your README using Visual Studio Code. Here are some useful editor keyboard shortcuts:
 
-* Split the editor (`Cmd+\` on macOS or `Ctrl+\` on Windows and Linux).
-* Toggle preview (`Shift+Cmd+V` on macOS or `Shift+Ctrl+V` on Windows and Linux).
-* Press `Ctrl+Space` (Windows, Linux, macOS) to see a list of Markdown snippets.
+- Split the editor (`Cmd+\` on macOS or `Ctrl+\` on Windows and Linux).
+- Toggle preview (`Shift+Cmd+V` on macOS or `Shift+Ctrl+V` on Windows and Linux).
+- Press `Ctrl+Space` (Windows, Linux, macOS) to see a list of Markdown snippets.
 
 ## For more information
 
-* [Visual Studio Code's Markdown Support](http://code.visualstudio.com/docs/languages/markdown)
-* [Markdown Syntax Reference](https://help.github.com/articles/markdown-basics/)
+- [Visual Studio Code's Markdown Support](http://code.visualstudio.com/docs/languages/markdown)
+- [Markdown Syntax Reference](https://help.github.com/articles/markdown-basics/)
 
-**Enjoy!**
+**Enjoy!** -->

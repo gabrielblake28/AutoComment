@@ -1,6 +1,6 @@
 {
-  "name": "firstextension",
-  "displayName": "FirstExtension",
+  "name": "codesense",
+  "displayName": "CodeSense AI",
   "description": "",
   "version": "0.0.1",
   "engines": {
@@ -9,16 +9,15 @@
   "categories": [
     "Other"
   ],
-  "activationEvents": [
-    "onView:generate-explanation.explanation"
-  ],
+  "activationEvents": [],
+  "pricing:": "Free Trail",
   "main": "./out/extension.js",
   "contributes": {
     "viewsContainers": {
       "activitybar": [
         {
           "id": "generate-explanation",
-          "title": "Generated Explanation",
+          "title": "CodeSense AI",
           "icon": "media/comment-discussion.svg"
         }
       ]
@@ -26,9 +25,13 @@
     "views": {
       "generate-explanation": [
         {
+          "id": "generate-explanation.account",
+          "name": "Account"
+        },
+        {
           "type": "webview",
           "id": "generate-explanation.explanation",
-          "name": "Explanation"
+          "name": "Code Explanation"
         }
       ]
     },
@@ -36,38 +39,48 @@
       "editor/context": [
         {
           "when": "editorHasSelection",
-          "command": "firstextension.generatecomment",
+          "command": "codesense.generatecomment",
           "group": "1_modification"
         },
         {
           "when": "editorHasSelection",
-          "command": "firstextension.generateexplanation",
+          "command": "codesense.generateexplanation",
           "group": "1_modification"
         }
       ]
     },
     "commands": [
       {
-        "command": "firstextension.generatecomment",
+        "command": "codesense.generatecomment",
         "title": "Generate Comment"
       },
       {
-        "command": "firstextension.generateexplanation",
+        "command": "codesense.generateexplanation",
         "title": "Generate Explanation"
       },
       {
-        "command": "firstextension.addexp",
-        "title": "Add Explanation"
+        "command": "codesense.login",
+        "title": "Generate Explanation"
+      },
+      {
+        "command": "codesense.logout",
+        "title": "Generate Explanation"
       }
     ],
     "keybindings": [
       {
-        "command": "firstextension.generatecomment",
+        "command": "codesense.generatecomment",
         "key": "ctrl+shift+/"
       },
       {
-        "command": "firstextension.generateexplanation",
+        "command": "codesense.generateexplanation",
         "key": "ctrl+shift+f12"
+      }
+    ],
+    "viewsWelcome": [
+      {
+        "view": "generate-explanation.account",
+        "contents": "Enhance your developing experience. Use CodeSense AI to instantly generate comments and explain code. [Learn More](https://codesenseai.com) \n [ Log In ](command:codesense.login)"
       }
     ]
   },
@@ -93,7 +106,10 @@
     "typescript": "^5.0.4"
   },
   "dependencies": {
+    "@vscode/webview-ui-toolkit": "^1.2.2",
     "axios": "^1.4.0",
-    "openai": "^3.2.1"
+    "firebase": "^9.22.1",
+    "openai": "^3.2.1",
+    "uuid": "^9.0.0"
   }
 }
