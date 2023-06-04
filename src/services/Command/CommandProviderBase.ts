@@ -8,7 +8,7 @@ export abstract class CommandProviderBase {
 
     constructor(
         private readonly context: vscode.ExtensionContext, 
-        private readonly authProvider: FirebaseAuthProvider) {
+        authProvider: FirebaseAuthProvider) {
         this.AuthService = new AuthenticationService(context, authProvider);
     }
 
@@ -22,12 +22,14 @@ export abstract class CommandProviderBase {
             }
 
             if(!this.AuthService.TryAuthorizeCommand(command)) {
-                vscode.window.showErrorMessage("Your current plan does not support this command, redirecting to plans page.");
+                vscode.window.showErrorMessage("Your current plan does not support this command.", "ASDF");
 
                 if(!this.context.globalState.get("firstextension.authredirect")) {
                     this.context.globalState.update(`firstextension.authredirect`, true);
                     vscode.env.openExternal(vscode.Uri.parse("https://codesenseai.com/pricing"));
                 }
+
+                return false;
             }   
         }
 
