@@ -1,13 +1,13 @@
-/* eslint-disable @typescript-eslint/naming-convention */
-// The module 'vscode' contains the VS Code extensibility API
-// Import the module and reference it with the alias vscode in your code below
 import * as vscode from "vscode";
-import { config } from "dotenv";
 import { Configuration, OpenAIApi } from "openai";
 import { GenerateCommentCommand } from "./services/commandService/impl/GenerateComment/GenerateCommentCommand";
 import { ExplanationViewProvider } from "./services/viewProviders/ExplanationViewProvider";
-// import { login, logout } from "./auth/authCommands";
-config();
+import ExtensionConfiguration from "./config/firebase";
+import AutoExplanationProvider from "./services/AutoExplanation/AutoExplanationCommandProvider";
+import AutoCommentCommandProvider from "./services/AutoComment/AutoCommentCommandProvider";
+import { openAI } from "./config/openAI";
+import { FirebaseAuthProvider } from "./services/AuthService/FirebaseAuthProvider";
+
 
 // This method is called when your extension is activated
 // Your extension is activated the very first time the command is executed
@@ -17,17 +17,12 @@ config();
  * @returns None
  */
 export function activate(context: vscode.ExtensionContext) {
-  // Use the console to output diagnostic information (console.log) and errors (console.error)
-  // This line of code will only be executed once when your extension is activated
 
-  console.log('Activating extension "CodeSense ai"');
+  const extensionConfiguration = new ExtensionConfiguration();
+  extensionConfiguration.Initialize();
 
-  const configuration = new Configuration({
-    organization: "org-dEtIga6fE6tm2FkqJmKYh9Qc",
-    apiKey: "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",
-  });
-  const openai = new OpenAIApi(configuration);
   const provider = new ExplanationViewProvider(context.extensionUri);
+  const firebaseAuthProvider = new FirebaseAuthProvider(context, extensionConfiguration);
 
   let generateExplanation = vscode.commands.registerCommand(
     "codesense.generateexplanation",
@@ -110,17 +105,16 @@ export function activate(context: vscode.ExtensionContext) {
   );
 
   context.subscriptions.push(
-    generateComment,
-    generateExplanation,
+    new AutoExplanationProvider(openAI, context, firebaseAuthProvider).RegisterCommand(),
+    new AutoCommentCommandProvider(openAI, context, firebaseAuthProvider).RegisterCommand(),
     vscode.window.registerWebviewViewProvider(
       ExplanationViewProvider.viewType,
       provider,
       {
         webviewOptions: { retainContextWhenHidden: true },
       }
-    ),
-    vscode.commands.registerCommand("codesense.logout", async () => {})
-  );
+    )  
+    );
 }
 
 // This method is called when your extension is deactivated
