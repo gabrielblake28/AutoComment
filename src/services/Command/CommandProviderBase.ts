@@ -7,7 +7,7 @@ export abstract class CommandProviderBase {
     protected readonly AuthService: AuthenticationService;    
 
     constructor(
-        private readonly context: vscode.ExtensionContext, 
+        protected readonly context: vscode.ExtensionContext, 
         authProvider: FirebaseAuthProvider) {
         this.AuthService = new AuthenticationService(context, authProvider);
     }
@@ -22,7 +22,7 @@ export abstract class CommandProviderBase {
             }
 
             if(!this.AuthService.TryAuthorizeCommand(command)) {
-                vscode.window.showErrorMessage("Your current plan does not support this command.", "ASDF");
+                vscode.window.showErrorMessage("Your current plan does not support this command.");
 
                 if(!this.context.globalState.get("firstextension.authredirect")) {
                     this.context.globalState.update(`firstextension.authredirect`, true);

@@ -6,7 +6,7 @@ import { formatComment } from "../Command/commands";
 
 export class AutoCommentCommand implements IVscodeCommand {
     private readonly openAI: OpenAIApi;
-    public readonly CommandName: string = "firstextension.generatecomment";
+    public readonly CommandName: string = "codesense.generatecomment";
 
     private readonly progressTitle = "Generating Comment...";
     private readonly chatGPTModel = "gpt-3.5-turbo";

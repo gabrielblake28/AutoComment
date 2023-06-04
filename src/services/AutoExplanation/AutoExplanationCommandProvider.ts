@@ -1,10 +1,10 @@
 import * as vscode from "vscode";
-import { openAI } from "../../config/openAI";
 import { OpenAIApi } from "openai";
 import { CommandOptions, CommandProviderBase } from "../Command/CommandProviderBase";
 import { AutoExplanationCommand } from "./AutoExplanationCommand";
 import { ICommandProvider } from "../Command/ICommandProvider";
 import { FirebaseAuthProvider } from "../AuthService/FirebaseAuthProvider";
+import { ExplanationViewProvider } from "../viewProviders/ExplanationViewProvider";
 
 export default class AutoExplanationProvider extends CommandProviderBase implements ICommandProvider {
     private command: AutoExplanationCommand | undefined;
@@ -12,10 +12,9 @@ export default class AutoExplanationProvider extends CommandProviderBase impleme
     constructor(
         private readonly openAI: OpenAIApi, 
         context: vscode.ExtensionContext, 
-        authProvider: FirebaseAuthProvider) {
+        authProvider: FirebaseAuthProvider,
+        private readonly explanationViewProvider: ExplanationViewProvider) {
         super(context, authProvider);
-        this.openAI = openAI;
-        
     }
 
     public RegisterCommand(): vscode.Disposable {
@@ -31,7 +30,7 @@ export default class AutoExplanationProvider extends CommandProviderBase impleme
 
     protected RegisterCommandBase(commandOptions: CommandOptions): vscode.Disposable {
         if(!this.command) {
-            this.command = new AutoExplanationCommand(openAI);
+            this.command = new AutoExplanationCommand(this.openAI, this.explanationViewProvider);
         }
 
         return vscode.commands.registerCommand(this.command.CommandName, this.executeCommand.bind(this, this.command, commandOptions))

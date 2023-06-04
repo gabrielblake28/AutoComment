@@ -21,95 +21,15 @@ export function activate(context: vscode.ExtensionContext) {
   const extensionConfiguration = new ExtensionConfiguration();
   extensionConfiguration.Initialize();
 
-  const provider = new ExplanationViewProvider(context.extensionUri);
+  const explanationViewProvider = new ExplanationViewProvider(openAI,context.extensionUri);
   const firebaseAuthProvider = new FirebaseAuthProvider(context, extensionConfiguration);
 
-  let generateExplanation = vscode.commands.registerCommand(
-    "codesense.generateexplanation",
-    async () => {
-      vscode.window.withProgress(
-        {
-          title: "Generating Explanation...",
-          location: vscode.ProgressLocation.Notification,
-          cancellable: true,
-        },
-        async (progress, token) => {
-          const selection = vscode.window.activeTextEditor?.selection;
-          if (
-            selection?.start &&
-            selection.end &&
-            vscode.window.activeTextEditor
-          ) {
-            if (!provider.view) {
-              await vscode.commands.executeCommand(
-                "generate-explanation.explanation.focus"
-              );
-            } else {
-              provider.view?.show(true);
-            }
-
-            if (provider.view) {
-              await provider.addExplanation();
-            }
-          }
-        }
-      );
-    }
-  );
-
-  let generateComment = vscode.commands.registerCommand(
-    "codesense.generatecomment",
-    async () => {
-      vscode.window.withProgress(
-        {
-          title: "Generating Comment...",
-          location: vscode.ProgressLocation.Notification,
-          cancellable: true,
-        },
-        async (progress, token) => {
-          const selection = vscode.window.activeTextEditor?.selection;
-          if (
-            selection?.start &&
-            selection.end &&
-            vscode.window.activeTextEditor
-          ) {
-            const content = vscode.window.activeTextEditor?.document.getText(
-              new vscode.Range(selection.start, selection?.end)
-            );
-            const startPos = vscode.window.activeTextEditor?.document.lineAt(
-              vscode.window.activeTextEditor?.selection.start.line
-            ).range.start;
-            const indentation = vscode.window.activeTextEditor?.document.lineAt(
-              startPos.line
-            ).firstNonWhitespaceCharacterIndex;
-
-            const comment = await new GenerateCommentCommand().ExecuteAsync({
-              Content: content,
-              Indentation: indentation,
-              OpenAiClient: openai,
-            });
-
-            if (comment) {
-              vscode.window.activeTextEditor.edit((editBuilder) => {
-                editBuilder.insert(startPos, comment);
-              });
-            }
-          } else {
-            vscode.window.showInformationMessage(
-              "please select the code you would like to comment."
-            );
-          }
-        }
-      );
-    }
-  );
-
   context.subscriptions.push(
-    new AutoExplanationProvider(openAI, context, firebaseAuthProvider).RegisterCommand(),
+    new AutoExplanationProvider(openAI, context, firebaseAuthProvider, explanationViewProvider).RegisterCommand(),
     new AutoCommentCommandProvider(openAI, context, firebaseAuthProvider).RegisterCommand(),
     vscode.window.registerWebviewViewProvider(
       ExplanationViewProvider.viewType,
-      provider,
+      explanationViewProvider,
       {
         webviewOptions: { retainContextWhenHidden: true },
       }

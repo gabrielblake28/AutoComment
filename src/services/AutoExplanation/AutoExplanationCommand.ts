@@ -2,24 +2,25 @@ import { OpenAIApi } from "openai";
 import * as vscode from "vscode";
 import { formatComment } from "../Command/commands";
 import { IVscodeCommand } from "../Command/IVScodeCommand";
+import { ExplanationViewProvider } from "../viewProviders/ExplanationViewProvider";
 
 export class AutoExplanationCommand implements IVscodeCommand {
-    public readonly CommandName = "firstextension.generateexplanation";
-
-    private readonly progressTitle = "Generating Explanation...";
+    public readonly CommandName = "codesense.generateexplanation";
     private readonly openAI: OpenAIApi;
+    private readonly viewProvider: ExplanationViewProvider;
 
     private readonly chatGPTModel = "gpt-3.5.turbo";
     private readonly chatGPTRole = "user";
     private readonly explanationPrompt = "Please provide an explanation for the following code, but keep it succint and readable to a non programmer and try to avoid using programming terms:";
     private readonly temperature = 0.7;
 
-    constructor(openAI: OpenAIApi) {
-        this.openAI = openAI;;
+    constructor(openAI: OpenAIApi, explanationViewProvider: ExplanationViewProvider) {
+        this.openAI = openAI;
+        this.viewProvider = explanationViewProvider;
     }
 
-    public ExecuteCommand(cancellationToken: vscode.CancellationToken): Thenable<boolean> {        
-        return this.GenerateExplanation(cancellationToken);
+    public async ExecuteCommand(cancellationToken: vscode.CancellationToken): Promise<boolean> {                
+        return await this.viewProvider.AddExplanation(cancellationToken);
     }
 
     private async GenerateExplanation(cancellationToken: vscode.CancellationToken): Promise<boolean> {
