@@ -1,19 +1,13 @@
 import * as vscode from "vscode";
 import { getNonce } from "../../getNonce";
-import { Configuration, OpenAIApi } from "openai";
+import { OpenAIApi } from "openai";
 
 export class ExplanationViewProvider implements vscode.WebviewViewProvider {
   public static readonly viewType = "generate-explanation.explanation";
 
   public view?: vscode.WebviewView;
 
-  private configuration = new Configuration({
-    organization: "org-dEtIga6fE6tm2FkqJmKYh9Qc",
-    apiKey: "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",
-  });
-  private openai = new OpenAIApi(this.configuration);
-
-  constructor(private readonly _extensionUri: vscode.Uri) {}
+  constructor(private readonly openAI: OpenAIApi, private readonly _extensionUri: vscode.Uri) {}
 
   resolveWebviewView(
     webviewView: vscode.WebviewView,
@@ -31,11 +25,9 @@ export class ExplanationViewProvider implements vscode.WebviewViewProvider {
     webviewView.webview.html = this._getHtmlForWebview(webviewView.webview);
   }
 
-  public async addExplanation() {
+  public async AddExplanation(cancellationToken: vscode.CancellationToken): Promise<boolean> {
     if (!this.view) {
-      await vscode.commands.executeCommand(
-        "generate-explanation.explanation.focus"
-      );
+      await vscode.commands.executeCommand("generate-explanation.explanation.focus");
     } else {
       this.view?.show?.(true);
     }
@@ -49,7 +41,7 @@ export class ExplanationViewProvider implements vscode.WebviewViewProvider {
         new vscode.Range(selection.start, selection?.end)
       );
 
-      const result = await this.openai.createChatCompletion({
+      const result = await this.openAI.createChatCompletion({
         model: "gpt-3.5-turbo",
         messages: [
           {
@@ -65,12 +57,18 @@ export class ExplanationViewProvider implements vscode.WebviewViewProvider {
           this.view.webview,
           result.data.choices[0].message?.content ?? ""
         );
+
+        return true;
       }
     } else {
       vscode.window.showInformationMessage(
         "please select the code you would like to comment."
       );
+
+      return false;
     }
+
+    return false;
   }
 
   private _getHtmlForWebview(webview: vscode.Webview, content: string = "") {
