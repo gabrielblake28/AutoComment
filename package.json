@@ -108,14 +108,15 @@
     "typescript": "^5.0.4"
   },
   "dependencies": {
+    "@stripe/firestore-stripe-payments": "^0.0.6",
     "@vscode/webview-ui-toolkit": "^1.2.2",
     "axios": "^1.4.0",
-    "firebase": "^9.22.1",
-    "uuid": "^9.0.0",
     "dotenv": "^16.0.3",
+    "firebase": "^9.22.1",
     "firebase-tools": "^12.2.1",
     "googleapis": "^118.0.0",
     "openai": "^3.2.1",
+    "uuid": "^9.0.0",
     "uuidv4": "^6.2.13"
   }
 }

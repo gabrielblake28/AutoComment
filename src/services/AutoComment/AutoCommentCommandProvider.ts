@@ -4,6 +4,7 @@ import { AutoCommentCommand } from "./AutoCommentCommand";
 import * as vscode from "vscode";
 import { ICommandProvider } from "../Command/ICommandProvider";
 import { FirebaseAuthProvider } from "../AuthService/FirebaseAuthProvider";
+import { SubscriptionPlanTier } from "../AuthService/SubscriptionPlanTier";
 
 export default class AutoCommentCommandProvider extends CommandProviderBase implements ICommandProvider {
     private command: AutoCommentCommand | undefined;
@@ -16,7 +17,7 @@ export default class AutoCommentCommandProvider extends CommandProviderBase impl
 
     RegisterCommand(): vscode.Disposable {
         return this.RegisterCommandBase({
-            UseAuthentication: true,
+            UseAuthentication: SubscriptionPlanTier.Free,
             UseProgress: {
                 location: vscode.ProgressLocation.Notification, 
                 cancellable: true, 

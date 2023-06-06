@@ -1,6 +1,7 @@
 import { AuthenticationSession, Disposable, ExtensionContext, Memento } from "vscode";
 import { IVscodeCommand } from "../Command/IVScodeCommand";
 import { FirebaseAuthProvider } from "./FirebaseAuthProvider";
+import { SubscriptionPlanTier } from "./SubscriptionPlanTier";
 
 export class AuthenticationService implements Disposable {
     private readonly context: ExtensionContext;
@@ -10,8 +11,9 @@ export class AuthenticationService implements Disposable {
     private readonly authProvider: FirebaseAuthProvider;
 
     private readonly sessionScopes: string[] = [
-          "https://www.googleapis.com/auth/firebase.database",
-          "https://www.googleapis.com/auth/userinfo.email"
+        "https://www.googleapis.com/auth/firebase",
+        "https://www.googleapis.com/auth/firebase.database",
+        "https://www.googleapis.com/auth/userinfo.email",
         ]
 
     constructor(context: ExtensionContext, authProvider: FirebaseAuthProvider) {
@@ -33,9 +35,8 @@ export class AuthenticationService implements Disposable {
         }
     }
 
-    TryAuthorizeCommand(command: IVscodeCommand): boolean {
-        return true;
-        if(command.CommandName == this.generateCommentKey) {
+    TryAuthorizeCommand(scopes: string[], subscriptionPlan: SubscriptionPlanTier): boolean {
+        if(scopes.indexOf(subscriptionPlan) !== -1) {
             return true;
         } else {
             return false;

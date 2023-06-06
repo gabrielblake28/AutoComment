@@ -4,7 +4,8 @@ import { CommandOptions, CommandProviderBase } from "../Command/CommandProviderB
 import { AutoExplanationCommand } from "./AutoExplanationCommand";
 import { ICommandProvider } from "../Command/ICommandProvider";
 import { FirebaseAuthProvider } from "../AuthService/FirebaseAuthProvider";
-import { ExplanationViewProvider } from "../viewProviders/ExplanationViewProvider";
+import { ExplanationViewProvider } from "../ExplanationViewProvider/ExplanationViewProvider";
+import { SubscriptionPlanTier } from "../AuthService/SubscriptionPlanTier";
 
 export default class AutoExplanationProvider extends CommandProviderBase implements ICommandProvider {
     private command: AutoExplanationCommand | undefined;
@@ -19,7 +20,7 @@ export default class AutoExplanationProvider extends CommandProviderBase impleme
 
     public RegisterCommand(): vscode.Disposable {
         return this.RegisterCommandBase({
-            UseAuthentication: true, 
+            UseAuthentication: SubscriptionPlanTier.Standard, 
             UseProgress: {
                 title: "Generating Explanation...",
                 location: vscode.ProgressLocation.Notification,

@@ -1,7 +1,5 @@
 import * as vscode from "vscode";
-import { Configuration, OpenAIApi } from "openai";
-import { GenerateCommentCommand } from "./services/commandService/impl/GenerateComment/GenerateCommentCommand";
-import { ExplanationViewProvider } from "./services/viewProviders/ExplanationViewProvider";
+import { ExplanationViewProvider } from "./services/ExplanationViewProvider/ExplanationViewProvider";
 import ExtensionConfiguration from "./config/firebase";
 import AutoExplanationProvider from "./services/AutoExplanation/AutoExplanationCommandProvider";
 import AutoCommentCommandProvider from "./services/AutoComment/AutoCommentCommandProvider";

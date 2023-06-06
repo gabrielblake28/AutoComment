@@ -5,6 +5,7 @@ import *  as vscode from "vscode";
 import ExtensionConfiguration from "../../config/firebase";
 import { OAuth2Client } from "googleapis-common";
 import { uuid } from "uuidv4";
+import { SubscriptionPlanTier } from "./SubscriptionPlanTier";
 
 export class FirebaseAuthProvider implements  AuthenticationProvider, Disposable {
 
@@ -17,7 +18,7 @@ export class FirebaseAuthProvider implements  AuthenticationProvider, Disposable
         this.disposable = Disposable.from(
           authentication.registerAuthenticationProvider(`firebase`, `firebase_authprovider`, this, { supportsMultipleAccounts: false })
         )
-
+        this.ClearCacheCredentials();
         this.oauth2Client = new google.auth.OAuth2(
             "572669494840-uemo4hei0sqv8utjddf8knjrgc6gd2h1.apps.googleusercontent.com",
             "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",
@@ -42,15 +43,16 @@ export class FirebaseAuthProvider implements  AuthenticationProvider, Disposable
             }
 
             for(let i = 0; i < this.sessions.length; i++) {
+                let invalid = false;
                 for(let j = 0; j < scopes.length; j++) {
-
-                    if(j == this.sessions[i].scopes.length - 1) {
-                        returnSessions.push(this.sessions[i]);
-                    }
-
                     if(this.sessions[i].scopes.indexOf(this.sessions[i].scopes[j]) == -1) {
+                        invalid = true;
                         break;
                     } 
+                }
+
+                if(!invalid) {
+                    returnSessions.push(this.sessions[i]);
                 }
             }
 
@@ -90,6 +92,12 @@ export class FirebaseAuthProvider implements  AuthenticationProvider, Disposable
                     const user = await signInWithCredential(auth, credential);
     
                     if(user) {
+                        debugger;
+                        const token = (await user.user.getIdTokenResult());
+
+                        sortedScopes.push(token.claims.stripeRole)
+                        sortedScopes.push(SubscriptionPlanTier.Free);
+
                         const session = {
                             accessToken: await user.user.getIdToken(),
                             account: {
@@ -100,7 +108,7 @@ export class FirebaseAuthProvider implements  AuthenticationProvider, Disposable
                             id: uuid(),
                             scopes: sortedScopes
                         };
-    
+                        
                         this.sessions.push(session);
                         resolve(session);
                     }
@@ -111,6 +119,7 @@ export class FirebaseAuthProvider implements  AuthenticationProvider, Disposable
             catch(e)
             {
                 debugger;
+                this.ClearCacheCredentials();
                 throw e;
             }
 
@@ -173,5 +182,11 @@ export class FirebaseAuthProvider implements  AuthenticationProvider, Disposable
         this.context.globalState.update("firstextension.id_token", id_token);
         this.context.globalState.update("firstextension.access_credential", access_token);
         this.context.globalState.update("firstextension.refresh_token", refresh_token);
+    }
+
+    private ClearCacheCredentials() {
+        this.context.globalState.update("firstextension.id_token", null);
+        this.context.globalState.update("firstextension.access_credential", null);
+        this.context.globalState.update("firstextension.refresh_token", null);
     }
 }

@@ -2,6 +2,7 @@ import * as vscode from "vscode";
 import { IVscodeCommand } from "./IVScodeCommand";
 import { AuthenticationService } from "../AuthService/AuthService";
 import { FirebaseAuthProvider } from "../AuthService/FirebaseAuthProvider";
+import { SubscriptionPlanTier as SubscriptionPlanTier } from "../AuthService/SubscriptionPlanTier";
 
 export abstract class CommandProviderBase {
     protected readonly AuthService: AuthenticationService;    
@@ -16,12 +17,13 @@ export abstract class CommandProviderBase {
 
     protected async executeCommand(command: IVscodeCommand, commandOptions: CommandOptions): Promise<Thenable<boolean>> {
         if(commandOptions.UseAuthentication) {
-            if(!(await this.AuthService.TryAuthenticate())) {
+            var session = await this.AuthService.TryAuthenticate();
+            if(!session) {
                 vscode.window.showErrorMessage("Please login to access services.")
                 return false;
             }
 
-            if(!this.AuthService.TryAuthorizeCommand(command)) {
+            if(!this.AuthService.TryAuthorizeCommand([...session.scopes], commandOptions.UseAuthentication)) {
                 vscode.window.showErrorMessage("Your current plan does not support this command.");
 
                 if(!this.context.globalState.get("firstextension.authredirect")) {
@@ -47,8 +49,8 @@ export abstract class CommandProviderBase {
 }
 
 export interface CommandOptions {
-    UseAuthentication?: boolean,
-    UseProgress?: CommandProgressOptions
+    UseAuthentication?: SubscriptionPlanTier,
+    UseProgress?: CommandProgressOptions,
 }
 
 export interface CommandProgressOptions extends vscode.ProgressOptions {};

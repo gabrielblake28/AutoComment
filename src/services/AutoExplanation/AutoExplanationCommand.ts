@@ -2,7 +2,7 @@ import { OpenAIApi } from "openai";
 import * as vscode from "vscode";
 import { formatComment } from "../Command/commands";
 import { IVscodeCommand } from "../Command/IVScodeCommand";
-import { ExplanationViewProvider } from "../viewProviders/ExplanationViewProvider";
+import { ExplanationViewProvider } from "../ExplanationViewProvider/ExplanationViewProvider";
 
 export class AutoExplanationCommand implements IVscodeCommand {
     public readonly CommandName = "codesense.generateexplanation";
