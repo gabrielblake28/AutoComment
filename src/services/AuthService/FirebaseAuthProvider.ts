@@ -92,10 +92,9 @@ export class FirebaseAuthProvider implements  AuthenticationProvider, Disposable
                     const user = await signInWithCredential(auth, credential);
     
                     if(user) {
-                        debugger;
                         const token = (await user.user.getIdTokenResult());
 
-                        sortedScopes.push(token.claims.stripeRole)
+                        sortedScopes.push(token.claims.stripeRole);
                         sortedScopes.push(SubscriptionPlanTier.Free);
 
                         const session = {
@@ -112,9 +111,7 @@ export class FirebaseAuthProvider implements  AuthenticationProvider, Disposable
                         this.sessions.push(session);
                         resolve(session);
                     }
-                }
-                
-                
+                }                         
             }
             catch(e)
             {

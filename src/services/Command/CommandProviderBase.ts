@@ -19,12 +19,12 @@ export abstract class CommandProviderBase {
         if(commandOptions.UseAuthentication) {
             var session = await this.AuthService.TryAuthenticate();
             if(!session) {
-                vscode.window.showErrorMessage("Please login to access services.")
+                vscode.window.showErrorMessage("Please login to access services.");
                 return false;
             }
 
             if(!this.AuthService.TryAuthorizeCommand([...session.scopes], commandOptions.UseAuthentication)) {
-                vscode.window.showErrorMessage("Your current plan does not support this command.");
+                vscode.window.showErrorMessage("Your current plan does not support this command. Upgrade at https://codesenseai.com");
 
                 if(!this.context.globalState.get("firstextension.authredirect")) {
                     this.context.globalState.update(`firstextension.authredirect`, true);

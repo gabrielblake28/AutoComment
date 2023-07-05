@@ -80,7 +80,7 @@
     "viewsWelcome": [
       {
         "view": "generate-explanation.account",
-        "contents": "Enhance your developing experience. Use CodeSense AI to instantly generate comments and explain code. [Learn More](https://codesenseai.com) \n [ Log In ](command:codesense.login)"
+        "contents": "Enhance your developing experience. Use CodeSense AI to instantly generate comments and explain code. [Learn More](https://codesenseai.com) \n Run a command to login \n e.g. Ctrl + Shift + /"
       }
     ]
   },

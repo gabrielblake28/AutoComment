@@ -111,10 +111,7 @@ export class ExplanationViewProvider implements vscode.WebviewViewProvider {
       </head>
       <body>
       
-        <div >
-        <h4><div class="steps">Step 1:</div> Highlight code snippet</h4>
-        <h4><div class="steps">Step 2:</div> Run Command (Ctrl + Shift + F12)</h4>  
-        <hr/>      
+        <div >    
           <div class="content">${content}</div>  
         </div>
   
