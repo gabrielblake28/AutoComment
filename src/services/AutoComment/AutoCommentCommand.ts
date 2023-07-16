@@ -29,43 +29,49 @@ export class AutoCommentCommand implements IVscodeCommand {
         if (selection?.start && selection.end) {
           const content = vscode.window.activeTextEditor?.document.getText(
             new vscode.Range(selection.start, selection?.end)
-          );
-    
-          const result = await this.openAI.createChatCompletion({
-            model: this.chatGPTModel,
-            messages: [
-              {
-                role: this.chatGPTRole,
-                content: `${this.chatGPTPrompt} ${content}`,
-              },
-            ],
-            temperature: 0.7,
-          });
-    
-          const highlights = await vscode.commands.executeCommand(
-            "vscode.executeDocumentSymbolProvider",
-            vscode.window.activeTextEditor?.document.uri
-          );
-    
-          vscode.window.activeTextEditor?.edit((editBuilder) => {
-            if (vscode.window.activeTextEditor) {
-              const startPos = vscode.window.activeTextEditor.document.lineAt(
-                vscode.window.activeTextEditor?.selection.start.line
-              ).range.start;
-              const indentation = vscode.window.activeTextEditor.document.lineAt(
-                startPos.line
-              ).firstNonWhitespaceCharacterIndex;
-              editBuilder.insert(
-                startPos,
-    
-                formatComment(
-                  result.data.choices[0].message?.content ?? "",
-                  indentation
-                )
-              );
-            }
-          });
-          return true;
+          );  
+
+          if (content?.trim() !== '') {
+            const result = await this.openAI.createChatCompletion({
+              model: this.chatGPTModel,
+              messages: [
+                {
+                  role: this.chatGPTRole,
+                  content: `${this.chatGPTPrompt} ${content}`,
+                },
+              ],
+              temperature: 0.7,
+            });
+      
+            const highlights = await vscode.commands.executeCommand(
+              "vscode.executeDocumentSymbolProvider",
+              vscode.window.activeTextEditor?.document.uri
+            );
+      
+            vscode.window.activeTextEditor?.edit((editBuilder) => {
+              if (vscode.window.activeTextEditor) {
+                const startPos = vscode.window.activeTextEditor.document.lineAt(
+                  vscode.window.activeTextEditor?.selection.start.line
+                ).range.start;
+                const indentation = vscode.window.activeTextEditor.document.lineAt(
+                  startPos.line
+                ).firstNonWhitespaceCharacterIndex;
+                editBuilder.insert(
+                  startPos,
+      
+                  formatComment(
+                    result.data.choices[0].message?.content ?? "",
+                    indentation
+                  )
+                );
+              }
+            });
+            return true;
+          } else {
+            vscode.window.showInformationMessage(this.selectCodeText);
+            return false;
+          }
+          
         } else {
           vscode.window.showInformationMessage(this.selectCodeText);
           return false;
