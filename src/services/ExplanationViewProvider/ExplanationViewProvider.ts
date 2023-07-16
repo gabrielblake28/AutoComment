@@ -110,7 +110,6 @@ export class ExplanationViewProvider implements vscode.WebviewViewProvider {
   
       </head>
       <body>
-      
         <div >    
           <div class="content">${content}</div>  
         </div>
