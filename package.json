@@ -1,10 +1,17 @@
 {
   "name": "codesense",
   "displayName": "CodeSense AI",
+  "publisher": "CodeSenseAI",
   "description": "",
   "version": "0.0.1",
+  "icon": "/media/CodeSenseLogo.png",
   "engines": {
     "vscode": "^1.77.0"
+  },
+  "repository":
+  {
+    "type": "git",
+    "url": "https://github.com/gabrielblake28/AutoComment"
   },
   "categories": [
     "Other"

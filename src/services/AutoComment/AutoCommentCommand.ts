@@ -11,7 +11,7 @@ export class AutoCommentCommand implements IVscodeCommand {
     private readonly progressTitle = "Generating Comment...";
     private readonly chatGPTModel = "gpt-3.5-turbo";
     private readonly chatGPTRole = "user";
-    private readonly chatGPTPrompt = "Please provide a comment for the following selection, but keep it succint and readable to a non programmer:";
+    private readonly chatGPTPrompt = "Please provide a comment for the following selection, but keep it succint and readable, avoiding common programming terms:";
     private readonly selectCodeText =  "please select the code you would like to comment.";
 
     constructor(openAI: OpenAIApi) {
@@ -40,7 +40,7 @@ export class AutoCommentCommand implements IVscodeCommand {
                   content: `${this.chatGPTPrompt} ${content}`,
                 },
               ],
-              temperature: 0.7,
+              temperature: 0.5,
             });
       
             const highlights = await vscode.commands.executeCommand(

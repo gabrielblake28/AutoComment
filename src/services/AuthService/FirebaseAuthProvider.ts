@@ -44,7 +44,7 @@ export class FirebaseAuthProvider
         { supportsMultipleAccounts: false }
       )
     );
-    this.ClearCacheCredentials();
+    // this.ClearCacheCredentials();
     this.oauth2Client = new google.auth.OAuth2(
       "572669494840-uemo4hei0sqv8utjddf8knjrgc6gd2h1.apps.googleusercontent.com",
       "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",
@@ -130,7 +130,6 @@ export class FirebaseAuthProvider
           const user = await signInWithCredential(auth, credential);
 
           if (user) {
-            debugger;
             const token = await user.user.getIdTokenResult();
 
             sortedScopes.push(token.claims.stripeRole);
@@ -151,7 +150,6 @@ export class FirebaseAuthProvider
           }
         }
       } catch (e) {
-        debugger;
         this.ClearCacheCredentials();
         throw e;
       }

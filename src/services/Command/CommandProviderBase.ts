@@ -28,7 +28,7 @@ export abstract class CommandProviderBase {
 
                 if(!this.context.globalState.get("firstextension.authredirect")) {
                     this.context.globalState.update(`firstextension.authredirect`, true);
-                    vscode.env.openExternal(vscode.Uri.parse("https://codesenseai.com/pricing"));
+                    vscode.env.openExternal(vscode.Uri.parse("https://codesenseai.com/#pricing"));
                 }
 
                 return false;
