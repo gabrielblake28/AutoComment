@@ -1,12 +1,13 @@
 import { FirebaseApp, initializeApp } from "firebase/app";
-import { Analytics, getAnalytics } from "firebase/analytics";
-import { AppCheck, initializeAppCheck, ReCaptchaV3Provider } from "firebase/app-check";
+import { Analytics } from "firebase/analytics";
+import { AppCheck } from "firebase/app-check";
 import dotenv from "dotenv";
+import path from "path";
 
 export default class ExtensionConfiguration {
 
     private readonly firebaseConfig = {
-        apiKey: "AIzaSyDuao76w3soGQkdCk7rdM28zOdT00eFWyA",
+        apiKey: process.env.FIREBASE_API_KEY,
         authDomain: "https://codesenseai.com",
         projectId: "codesense-ai",
         storageBucket: "codesense-ai.appspot.com",
@@ -24,14 +25,7 @@ export default class ExtensionConfiguration {
     private firebaseAppCheck: AppCheck | undefined;
 
     Initialize(): void {
-        dotenv.config();
-        this.firebaseApp = initializeApp(this.firebaseConfig);
-        // this.firebaseAnalytics = getAnalytics(this.firebaseApp);
-        // this.firebaseAppCheck = initializeAppCheck(this.firebaseApp, {
-        //     provider: new ReCaptchaV3Provider('abcdefghijklmnopqrstuvwxy-1234567890abcd'),
-        //     isTokenAutoRefreshEnabled: true
-        // });   
-            
-            
+        dotenv.config({path: path.resolve(__dirname, "../..", ".env")});
+        this.firebaseApp = initializeApp(this.firebaseConfig);       
     }
 }
