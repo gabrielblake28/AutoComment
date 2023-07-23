@@ -10,7 +10,7 @@ With CodeSense AI, writing comprehensive and meaningful comments becomes a breez
 
 _Default Keybind: Ctrl + Shift + /_
 
-![Comment Generation Demo](media/CommentGenerationGif.gif)
+![Comment Generation Demo](https://github.com/gabrielblake28/AutoComment/blob/main/media/CommentGenerationGif.gif?raw=true)
 
 <!-- Developers can easily customize the comment style and level of detail to suit their preferences and project requirements. -->
 
@@ -18,11 +18,11 @@ _Default Keybind: Ctrl + Shift + /_
 
 This feature utilizes ChatGPT, an advanced language model, to provide clear and detailed explanations for code segments, helping developers understand complex logic and improve their code comprehension.
 
-With CodeSense AI Explanation, unraveling intricate code becomes effortless. Simply select a code snippet in Visual Studio and invoke the feature with a click or a customizable keyboard shortcut. CodeSense Explanation then leverages the capabilities of ChatGPT to break down the code, identify key algorithms and patterns, and provide step-by-step explanations of its functionality.
+With CodeSense AI Explanation, unraveling intricate code becomes effortless. Simply select a code snippet in Visual Studio Code and invoke the feature with a click or a customizable keyboard shortcut. CodeSense Explanation then leverages the capabilities of ChatGPT to break down the code, identify key algorithms and patterns, and provide step-by-step explanations of its functionality.
 
 _Default Keybind: Ctrl + Shift + F12_
 
-![Code Explanation Demo](media/CodeExplanationGif.gif)
+<!-- ![Code Explanation Demo](media/CodeExplanationGif.gif) -->
 
 ---
 

@@ -3,13 +3,12 @@
   "displayName": "CodeSense AI",
   "publisher": "CodeSenseAI",
   "description": "",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "icon": "/media/CodeSenseLogo.png",
   "engines": {
     "vscode": "^1.77.0"
   },
-  "repository":
-  {
+  "repository": {
     "type": "git",
     "url": "https://github.com/gabrielblake28/AutoComment"
   },
@@ -92,12 +91,16 @@
     ]
   },
   "scripts": {
-    "vscode:prepublish": "npm run compile",
     "compile": "tsc -p ./",
     "watch": "tsc -watch -p ./",
     "pretest": "npm run compile && npm run lint",
     "lint": "eslint src --ext ts",
-    "test": "node ./out/test/runTest.js"
+    "test": "node ./out/test/runTest.js",
+    "vscode:prepublish": "npm run esbuild-base -- --minify",
+    "esbuild-base": "esbuild ./src/extension.ts --bundle --outfile=out/main.js --external:vscode --format=cjs --platform=node",
+    "esbuild": "npm run esbuild-base -- --sourcemap",
+    "esbuild-watch": "npm run esbuild-base -- --sourcemap --watch",
+    "test-compile": "tsc -p ./"
   },
   "devDependencies": {
     "@types/axios": "^0.14.0",
@@ -109,6 +112,7 @@
     "@typescript-eslint/eslint-plugin": "^5.59.1",
     "@typescript-eslint/parser": "^5.59.1",
     "@vscode/test-electron": "^2.3.0",
+    "esbuild": "^0.18.15",
     "eslint": "^8.39.0",
     "glob": "^8.1.0",
     "mocha": "^10.2.0",
