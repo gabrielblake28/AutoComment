@@ -10,7 +10,7 @@ With CodeSense AI, writing comprehensive and meaningful comments becomes a breez
 
 _Default Keybind: Ctrl + Shift + /_
 
-![Comment Generation Demo](https://github.com/gabrielblake28/AutoComment/blob/main/media/CommentGenerationGif.gif?raw=true)
+![Comment Generation Demo](https://github.com/gabrielblake28/CodeSenseImages/blob/main/CommentGenerationGif.gif?raw=true)
 
 <!-- Developers can easily customize the comment style and level of detail to suit their preferences and project requirements. -->
 
