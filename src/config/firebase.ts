@@ -7,7 +7,7 @@ import path from "path";
 export default class ExtensionConfiguration {
 
     private readonly firebaseConfig = {
-        apiKey: process.env.FIREBASE_API_KEY,
+        apiKey: "AIzaSyDuao76w3soGQkdCk7rdM28zOdT00eFWyA",
         authDomain: "https://codesenseai.com",
         projectId: "codesense-ai",
         storageBucket: "codesense-ai.appspot.com",

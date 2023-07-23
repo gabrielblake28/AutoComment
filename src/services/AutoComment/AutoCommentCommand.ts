@@ -24,7 +24,6 @@ export class AutoCommentCommand implements IVscodeCommand {
 
     private async GenerateComment(cancellationToken: vscode.CancellationToken): Promise<boolean> {
         try {
-
         const selection = vscode.window.activeTextEditor?.selection;
         if (selection?.start && selection.end) {
           const content = vscode.window.activeTextEditor?.document.getText(
