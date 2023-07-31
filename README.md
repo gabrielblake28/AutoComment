@@ -46,7 +46,7 @@ _Default Keybind: Ctrl + Shift + F12_
 
 ## Contact
 
-If you have any inquiries, comments, or concerns, please don't hesitate to contact us at admin@codesenseai.com. We highly value your feedback as it plays a pivotal role in our continuous efforts to enhance our product. We encourage you to provide feedback directly on our website at [Codesenseai.com](https://codesenseai.com). Your input is invaluable to us, and we appreciate your contribution to improving our services.
+If you have any inquiries, comments, or concerns, please don't hesitate to contact us at support@codesenseai.com. We highly value your feedback as it plays a pivotal role in our continuous efforts to enhance our product. We encourage you to provide feedback directly on our website at [Codesenseai.com](https://codesenseai.com). Your input is invaluable to us, and we appreciate your contribution to improving our services.
 
 <!-- ## Release Notes
 

@@ -2,7 +2,7 @@
   "name": "codesense",
   "displayName": "CodeSense AI",
   "publisher": "CodeSenseAI",
-  "description": "",
+  "description": "An AI developer tool for VS Code",
   "version": "0.0.2",
   "icon": "/media/CodeSenseLogo.png",
   "engines": {
@@ -16,7 +16,7 @@
     "Other"
   ],
   "activationEvents": [],
-  "pricing:": "Free Trail",
+  "pricing:": "Trial",
   "main": "./out/extension.js",
   "contributes": {
     "viewsContainers": {
