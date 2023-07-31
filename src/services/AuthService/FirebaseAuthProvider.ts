@@ -23,6 +23,8 @@ import ExtensionConfiguration from "../../config/firebase";
 import { OAuth2Client } from "googleapis-common";
 import { uuid } from "uuidv4";
 import { SubscriptionPlanTier } from "./SubscriptionPlanTier";
+import { create } from "domain";
+import { access } from "fs";
 
 export class FirebaseAuthProvider
   implements AuthenticationProvider, Disposable
@@ -48,7 +50,7 @@ export class FirebaseAuthProvider
     this.oauth2Client = new google.auth.OAuth2(
       "572669494840-uemo4hei0sqv8utjddf8knjrgc6gd2h1.apps.googleusercontent.com",
       "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",
-      "https://codesenseai.com/auth/complete"
+      "http://localhost:8000/auth/complete"
     );
   }
 
@@ -90,44 +92,37 @@ export class FirebaseAuthProvider
     });
   }
 
-  createSession(scopes: readonly string[]): Thenable<AuthenticationSession> {
-    return new Promise(async (resolve) => {
-      const sortedScopes = [...scopes].sort();
-      // const auth = getAuth();
-      // auth.useDeviceLanguage();
+  async LaunchSession(scopes: string[]) {
+    const url = this.oauth2Client.generateAuthUrl({
+      // 'online' (default) or 'offline' (gets refresh_token)
+      access_type: "offline",
 
-      for (let i = 0; i < sortedScopes.length; i++) {
-        this.authProvider.addScope(sortedScopes[i]);
-      }
+      // If you only need one scope you can pass it as a string
+      scope: scopes,
+    });
 
-      try {
-        let accessToken: string | undefined = this.context.globalState.get(
-          "firstextension.access_token"
-        );
-        let idToken: string | undefined = this.context.globalState.get(
-          "firstextension.id_token"
-        );
-        let refreshToken: string | undefined = this.context.globalState.get(
-          "firstextension.refresh_token"
-        );
+    env.openExternal(await env.asExternalUri(Uri.parse(url)));
+  }
 
-        const auth = getAuth(this.extensionConfiguration.App);
+  CreateSessionWithAccessToken(
+    scopes: readonly string[],
+    accessToken: string
+  ): Thenable<AuthenticationSession> {
+    try {
+      return new Promise(async (resolve, reject) => {
+        const sortedScopes = [...scopes].sort();
 
-        let credential = await this.TryAuthenticateSession(
-          sortedScopes,
-          idToken,
-          accessToken
-        );
+        let credential = await this.TryAuthenticateSession(accessToken);
 
         if (!credential) {
           credential = await this.TryRefreshAuthenticatedSession(
             sortedScopes,
-            refreshToken
+            this.context.globalState.get("firstextension.refresh_token")
           );
         }
 
         if (credential) {
-          const user = await signInWithCredential(auth, credential);
+          const user = await signInWithCredential(getAuth(), credential);
 
           if (user) {
             const token = await user.user.getIdTokenResult();
@@ -149,11 +144,23 @@ export class FirebaseAuthProvider
             resolve(session);
           }
         }
-      } catch (e) {
-        this.ClearCacheCredentials();
-        throw e;
-      }
-    });
+      });
+    } catch (e) {
+      this.ClearCacheCredentials();
+      throw e;
+    }
+  }
+
+  createSession(scopes: readonly string[]): Thenable<AuthenticationSession> {
+    const accessToken: string | undefined = this.context.globalState.get(
+      "firstextension.access_token"
+    );
+
+    if (!accessToken) {
+      throw new Error("Access token is invalid");
+    }
+
+    return this.CreateSessionWithAccessToken(scopes, accessToken);
   }
 
   async requestPersonalAccessToken(): Promise<string | undefined> {
@@ -175,38 +182,18 @@ export class FirebaseAuthProvider
   }
 
   private async TryAuthenticateSession(
-    sortedScopes: string[],
-    idToken?: string,
-    accessToken?: string
+    accessToken: string
   ): Promise<OAuthCredential | undefined> {
-    try {
-      if (!accessToken && !idToken) {
-        const url = this.oauth2Client.generateAuthUrl({
-          // 'online' (default) or 'offline' (gets refresh_token)
-          access_type: "offline",
+    const { tokens } = await this.oauth2Client.getToken(
+      decodeURIComponent(accessToken || "")
+    );
+    this.CacheCredentials(
+      tokens.id_token ?? undefined,
+      tokens.access_token ?? undefined,
+      tokens.refresh_token ?? undefined
+    );
 
-          // If you only need one scope you can pass it as a string
-          scope: sortedScopes,
-        });
-
-        env.openExternal(await env.asExternalUri(Uri.parse(url)));
-        const token = await this.requestPersonalAccessToken();
-
-        const { tokens } = await this.oauth2Client.getToken(
-          decodeURIComponent(token || "")
-        );
-        this.CacheCredentials(
-          tokens.id_token ?? undefined,
-          tokens.access_token ?? undefined,
-          tokens.refresh_token ?? undefined
-        );
-
-        idToken = tokens.id_token ?? undefined;
-        accessToken = tokens.access_token ?? undefined;
-      }
-
-      return GoogleAuthProvider.credential(idToken, accessToken);
-    } catch (e) {}
+    return GoogleAuthProvider.credential(tokens.id_token, tokens.access_token);
   }
 
   private async TryRefreshAuthenticatedSession(
