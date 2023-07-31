@@ -1,6 +1,6 @@
 # CodeSense AI
 
-CodeSense AI is a cutting-edge Visual Studio extension designed to enhance code documentation and comprehension through the power of artificial intelligence. Leveraging the capabilities of ChatGPT, CodeSense AI revolutionizes the way developers write comments for their code and understand complex programming concepts.
+CodeSense AI is a cutting-edge Visual Studio Code extension designed to enhance code documentation and comprehension through the power of artificial intelligence. Leveraging the capabilities of ChatGPT, CodeSense AI revolutionizes the way developers write comments for their code and understand complex programming concepts.
 
 _Contact Information Below_
 
