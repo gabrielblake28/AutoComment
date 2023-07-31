@@ -3,7 +3,7 @@
   "displayName": "CodeSense AI",
   "publisher": "CodeSenseAI",
   "description": "An AI developer tool for VS Code",
-  "version": "0.0.3",
+  "version": "1.0.0",
   "icon": "/media/CodeSenseLogo.png",
   "engines": {
     "vscode": "^1.77.0"
