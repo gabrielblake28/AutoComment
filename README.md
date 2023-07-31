@@ -1,8 +1,11 @@
-# CodeSense AI
+# [CodeSense AI - 30 Day Free Trial](https://codesenseai.com)
 
-CodeSense AI is a cutting-edge Visual Studio extension designed to enhance code documentation and comprehension through the power of artificial intelligence. Leveraging the capabilities of ChatGPT, CodeSense AI revolutionizes the way developers write comments for their code and understand complex programming concepts.
+CodeSense AI is a cutting-edge Visual Studio extension designed to enhance code documentation and comprehension through the power of artificial intelligence. Leveraging the capabilities of ChatGPT, CodeSense AI revolutionizes the way developers write comments for their code and understand complex programming concepts. 
+This extension has been developed by industry professionals with more than a decade of experience in the field.
 
-_Contact Information Below_
+    CodeSense AI utilizes Stripe and Google services to securely manage sensitive data. Rest assured that we do not retain any of your financial information, and you retain the freedom to cancel your subscription at your convenience.
+
+Take advantage of our free trial offer and get started [today!](https://codesenseai.com#pricing)
 
 # Comment Generation
 
@@ -46,7 +49,7 @@ _Default Keybind: Ctrl + Shift + F12_
 
 ## Contact
 
-If you have any inquiries, comments, or concerns, please don't hesitate to contact us at support@codesenseai.com. We highly value your feedback as it plays a pivotal role in our continuous efforts to enhance our product. We encourage you to provide feedback directly on our website at [Codesenseai.com](https://codesenseai.com). Your input is invaluable to us, and we appreciate your contribution to improving our services.
+If you have any questions, comments, or concerns, please don't hesitate to contact us at support@codesenseai.com. We highly value your feedback as it plays a pivotal role in our continuous efforts to enhance our product. We encourage you to provide feedback directly on our website at [Codesenseai.com](https://codesenseai.com). Your input is invaluable to us, and we appreciate your contribution to improving our services.
 
 <!-- ## Release Notes
 
