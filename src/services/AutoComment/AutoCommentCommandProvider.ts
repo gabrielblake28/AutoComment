@@ -17,7 +17,7 @@ export default class AutoCommentCommandProvider extends CommandProviderBase impl
 
     RegisterCommand(): vscode.Disposable {
         return this.RegisterCommandBase({
-            UseAuthentication: SubscriptionPlanTier.Free,
+            UseAuthentication: SubscriptionPlanTier.Standard,
             UseProgress: {
                 location: vscode.ProgressLocation.Notification, 
                 cancellable: true, 
